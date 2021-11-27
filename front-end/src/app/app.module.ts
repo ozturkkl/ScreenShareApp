@@ -8,6 +8,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { ImageListComponent } from './components/image-list/image-list.component';
 import { ImageItemComponent } from './components/image-item/image-item.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,10 +20,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     ImageItemComponent,
     WelcomeComponent,
   ],
-  imports: [
-    BrowserModule
-  ],
+  imports: [BrowserModule, BrowserAnimationsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
