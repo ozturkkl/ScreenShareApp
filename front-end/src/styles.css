@@ -1,6 +1,12 @@
+:root {
+  --color-primary: #273043;
+  --color-accent: #558564;
+}
+
 html,
 body {
   height: 100%;
+  background-color: var(--color-primary);
 }
 
 body {
