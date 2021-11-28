@@ -7,8 +7,17 @@ Setup your back-end routing
 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 
 */
 
-router.get('/', (req, res) => {});
+router.get('/screenshots', (req, res) => {
+    res.json({
+        screenshots: []
+    })
+});
 
-router.post('/', (req, res) => {});
+router.post('/screenshot', (req, res) => {
+    console.log(req.body)
+    res.json({
+        screenshotUrl: "url"
+    })
+});
 
 module.exports = router;
