@@ -17,6 +17,9 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2017",
+    "types": [
+      "w3c-image-capture"
+    ],
     "module": "es2020",
     "lib": [
       "es2020",

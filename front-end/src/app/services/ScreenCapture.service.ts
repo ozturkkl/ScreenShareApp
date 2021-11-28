@@ -12,6 +12,7 @@ const gdmOptions = {
 })
 export class ScreenCaptureService {
   streamBuffer: MediaStream | null = null;
+  screenShot: any = null;
 
   constructor() {}
 
@@ -25,6 +26,17 @@ export class ScreenCaptureService {
     if (!this.streamBuffer)
       this.streamBuffer = await this.startCapture(gdmOptions);
     return this.streamBuffer;
+  }
+
+  async captureImage() {
+    const videoTrack = this.streamBuffer?.getVideoTracks()[0];
+    let frame = null;
+    if (videoTrack) {
+      const imageCapture = new ImageCapture(videoTrack);
+      frame = await imageCapture.grabFrame();
+    }
+
+    return frame;
   }
 
   async startCapture(displayMediaOptions: any) {

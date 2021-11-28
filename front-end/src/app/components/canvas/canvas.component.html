@@ -1,7 +1,31 @@
-<video autoplay #videoElm [hidden]="!streamBuffer"></video>
+<video autoplay #videoElm [hidden]="!streamBuffer || imageBitmap"></video>
+<canvas #canvasElm [hidden]="!imageBitmap"></canvas>
 <div class="canvas-buttons">
   <button mat-mini-fab class="screen-button" (click)="changeScreen()">
     <mat-icon>desktop_windows</mat-icon>
   </button>
-  <button mat-raised-button color="accent" *ngIf="streamBuffer">Capture</button>
+  <button
+    mat-mini-fab
+    color="warn"
+    (click)="discardCapture()"
+    *ngIf="imageBitmap"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button
+    mat-mini-fab
+    color="accent"
+    (click)="saveCapture()"
+    *ngIf="imageBitmap"
+  >
+    <mat-icon>save</mat-icon>
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    *ngIf="streamBuffer && !imageBitmap"
+    (click)="captureImage()"
+  >
+    Capture
+  </button>
 </div>
