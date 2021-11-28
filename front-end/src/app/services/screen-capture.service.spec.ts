@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ScreenCaptureService } from './ScreenCapture.service';
+import { ScreenCaptureService } from './screen-capture.service';
 
 describe('ScreenCaptureService', () => {
   let service: ScreenCaptureService;

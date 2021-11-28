@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
-import { ScreenCaptureService } from 'src/app/services/ScreenCapture.service';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { ScreenCaptureService } from 'src/app/services/screen-capture.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-canvas',
@@ -9,43 +10,48 @@ import { ScreenCaptureService } from 'src/app/services/ScreenCapture.service';
 export class CanvasComponent {
   streamBuffer: MediaStream | null = null;
   imageBitmap: ImageBitmap | null = null;
-  constructor(private screenCaptureService: ScreenCaptureService) {}
+  constructor(
+    private screenCaptureService: ScreenCaptureService,
+    private storageService: StorageService
+  ) {}
 
   @ViewChild('videoElm') videoElm: any;
   @ViewChild('canvasElm') canvasElm: any;
+  @Output() galleryRequest = new EventEmitter();
 
   async ngAfterViewInit() {
     this.streamBuffer = await this.screenCaptureService.getBuffer();
-    this.updatePlayer();
+    this.updatePlayer(this.videoElm.nativeElement);
   }
 
   async changeScreen() {
     this.streamBuffer = null;
     this.discardCapture();
     this.streamBuffer = await this.screenCaptureService.changeScreen();
-    this.updatePlayer();
+    this.updatePlayer(this.videoElm.nativeElement);
   }
 
   async captureImage() {
     this.imageBitmap = await this.screenCaptureService.captureImage();
-    const canvasElm = <HTMLCanvasElement>this.canvasElm.nativeElement;
-    if (this.imageBitmap && canvasElm)
-      this.drawCanvas(canvasElm, this.imageBitmap);
+    this.drawCanvas(this.canvasElm.nativeElement, this.imageBitmap);
+    if (!this.imageBitmap) this.ngAfterViewInit();
   }
 
   discardCapture() {
     this.imageBitmap = null;
   }
-  saveCapture() {
-    console.log('saveCapture');
+  async saveCapture() {
+    if (!this.imageBitmap) return;
+    await this.storageService.saveScreenshot(this.imageBitmap);
+    this.galleryRequest.emit();
   }
 
-  updatePlayer() {
-    const video = <HTMLVideoElement>this.videoElm.nativeElement;
+  updatePlayer(video: HTMLVideoElement) {
     if (video) video.srcObject = this.streamBuffer;
   }
 
-  drawCanvas(canvas: HTMLCanvasElement, img: ImageBitmap) {
+  drawCanvas(canvas: HTMLCanvasElement, img: ImageBitmap | null) {
+    if (!canvas || !img) return;
     canvas.width = img.width;
     canvas.height = img.height;
     canvas.getContext('2d')?.drawImage(img, 0, 0, img.width, img.height);

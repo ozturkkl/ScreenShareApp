@@ -23,23 +23,25 @@ export class ScreenCaptureService {
   }
 
   async getBuffer() {
-    if (!this.streamBuffer)
+    if (
+      !this.streamBuffer ||
+      this.streamBuffer.getVideoTracks()[0].readyState === 'ended'
+    )
       this.streamBuffer = await this.startCapture(gdmOptions);
     return this.streamBuffer;
   }
 
   async captureImage() {
     const videoTrack = this.streamBuffer?.getVideoTracks()[0];
-    let frame = null;
-    if (videoTrack) {
-      const imageCapture = new ImageCapture(videoTrack);
-      frame = await imageCapture.grabFrame();
+    if (!videoTrack || videoTrack?.readyState === 'ended') {
+      this.streamBuffer = null;
+      return null;
     }
-
-    return frame;
+    const imageCapture = new ImageCapture(videoTrack);
+    return await imageCapture.grabFrame();
   }
 
-  async startCapture(displayMediaOptions: any) {
+  async startCapture(displayMediaOptions: object) {
     let captureStream = null;
 
     try {
