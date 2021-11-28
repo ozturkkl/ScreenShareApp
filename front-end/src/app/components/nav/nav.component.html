@@ -1,16 +1,15 @@
 <p>
   <mat-toolbar>
     <div class="app-logo-container">
-      <!-- <mat-icon>perm_media</mat-icon> -->
       <img src="../../../favicon.ico" alt="App Logo" />
-      <h2>ScreenShare App</h2>
     </div>
+    <h2>ScreenShare App</h2>
 
     <span class="spacer"></span>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="onGallery()">
       <mat-icon>perm_media</mat-icon>
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="onAdd()">
       <mat-icon>add_circle</mat-icon>
     </button>
   </mat-toolbar>

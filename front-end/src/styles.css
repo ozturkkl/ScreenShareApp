@@ -1,8 +1,12 @@
 :root {
   --color-primary: #273043;
+  --color-primary-light: #495777;
   --color-accent: #558564;
   --color-text-light: #ededed;
   --color-text-dark: #101010;
+}
+* {
+  box-sizing: border-box;
 }
 
 html,

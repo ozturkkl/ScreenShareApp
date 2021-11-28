@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: calc(100% - 76px);
+  padding: 0 20px 35px 20px;
 }
 
 .welcome-arrow {

@@ -1,1 +1,7 @@
-<p>canvas works!</p>
+<video autoplay #videoElm [hidden]="!streamBuffer"></video>
+<div class="canvas-buttons">
+  <button mat-mini-fab class="screen-button" (click)="changeScreen()">
+    <mat-icon>desktop_windows</mat-icon>
+  </button>
+  <button mat-raised-button color="accent" *ngIf="streamBuffer">Capture</button>
+</div>

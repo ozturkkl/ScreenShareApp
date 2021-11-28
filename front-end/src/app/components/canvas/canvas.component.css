@@ -1,0 +1,22 @@
+:host() {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 76px);
+  padding-bottom: 35px;
+}
+
+:host() video {
+  max-width: 70%;
+  border: 2px solid var(--color-accent);
+  border-radius: 5px;
+  max-height: 80%;
+}
+
+button {
+  margin: 10px;
+}
+button.screen-button {
+  background-color: var(--color-primary-light);
+}

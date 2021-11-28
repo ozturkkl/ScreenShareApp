@@ -6,9 +6,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 10px;
+  margin: 0 10px;
 }
 .app-logo-container > img {
   width: 20px;
-  margin-right: 10px;
+}
+
+h2 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 5px;
 }

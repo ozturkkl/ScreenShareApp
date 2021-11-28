@@ -1,2 +1,4 @@
-<app-nav></app-nav>
-<app-welcome></app-welcome>
+<app-nav (addRequest)="onAdd()" (galleryRequest)="onGallery()"></app-nav>
+<app-welcome *ngIf="showWelcome"></app-welcome>
+<app-canvas *ngIf="showCanvas"></app-canvas>
+<app-gallery *ngIf="showGallery"></app-gallery>
