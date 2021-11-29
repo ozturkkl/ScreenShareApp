@@ -1,1 +1,3 @@
-<p>gallery works!</p>
+<span *ngFor="let screenshot of screenshots" class="screenshots-container">
+  <app-image-item [screenshot]="screenshot"></app-image-item>
+</span>

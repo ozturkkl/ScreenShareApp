@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { screenshot } from 'src/app/interfaces.module';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -7,10 +8,13 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(storageService: StorageService) {}
+  screenshots: screenshot[] = [];
+  constructor(private storageService: StorageService) {
+    this.onGallery();
+  }
 
-  showWelcome = true;
-  showGallery = false;
+  showWelcome = false;
+  showGallery = true;
   showCanvas = false;
 
   onAdd() {
@@ -18,9 +22,16 @@ export class AppComponent {
     this.showWelcome = false;
     this.showGallery = false;
   }
-  onGallery() {
+  async onGallery() {
+    this.screenshots = (await this.storageService.getScreenshots()).screenshots;
+    if (this.screenshots.length === 0) return this.onWelcome();
     this.showGallery = true;
     this.showCanvas = false;
     this.showWelcome = false;
+  }
+  onWelcome() {
+    this.showGallery = false;
+    this.showCanvas = false;
+    this.showWelcome = true;
   }
 }

@@ -1,0 +1,29 @@
+.screenshot-card {
+  display: flex;
+  margin: 20px;
+  border: 1px solid var(--color-accent);
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 0px;
+  position: relative;
+}
+.screenshot-image {
+  width: 100%;
+}
+.screenshot-card:hover .button-container {
+  transform: scale(1) translateY(0);
+}
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  transform: scale(0) translateY(-50px);
+  transition: transform 200ms ease-in-out;
+}
+.button-container button,
+.button-container a {
+  margin: 0 5px;
+}
