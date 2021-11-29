@@ -1,23 +1,53 @@
-const express = require('express');
-const router = express.Router();
+import express from "express";
+export const router = express.Router();
 
-/* 
-🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 
-Setup your back-end routing
-🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 🎙 
-*/
+import multer from "multer";
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
-router.get('/screenshots', (req, res) => {
+import {
+  uploadScreenshot,
+  getScreenshots,
+  deleteScreenshot,
+} from "../config/firebase.js";
+
+router.get("/screenshots", async (req, res) => {
+  try {
     res.json({
-        screenshots: []
-    })
+      success: true,
+      screenshots: await getScreenshots(req.query.session),
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      err: "Failed to get screenshots: " + error,
+    });
+  }
+});
+router.delete("/screenshot", async (req, res) => {
+  try {
+    await deleteScreenshot(req.query.id);
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      err: "Failed to delete screenshot: " + error,
+    });
+  }
 });
 
-router.post('/screenshot', (req, res) => {
-    console.log(req.body)
+router.post("/screenshot", upload.single("screen"), async (req, res) => {
+  try {
     res.json({
-        screenshotUrl: "url"
-    })
+      success: true,
+      screenshotUrl: await uploadScreenshot(req.query.session, req.file.buffer),
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      err: "Failed to upload screenshot: " + error,
+    });
+  }
 });
-
-module.exports = router;

@@ -6,35 +6,46 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root',
 })
 export class StorageService {
-  instance: string;
+  session: string;
 
   constructor(private http: HttpClient) {
     const path = window.location.pathname;
-    if (path === '/') this.generateInstance();
-    this.instance = path.substr(1);
+    if (path === '/') this.generateSession();
+    this.session = path.substr(1);
 
-    this.getScreenshots().subscribe((data) => {
-      console.log(data);
-    });
-    this.postScreenshot().subscribe((data) => {
-      console.log(data);
-    });
+    this.getScreenshots().then((data) => console.log(data));
   }
 
-  async saveScreenshot(imageBitmap: ImageBitmap) {
-    console.log(imageBitmap);
+  async saveScreenshot(imageBlob: Blob) {
+    const data = new FormData();
+    data.append('screen', imageBlob);
+    return await (
+      await fetch(
+        `http://localhost:3005/server/screenshot?session=${this.session}`,
+        {
+          method: 'POST',
+          body: data,
+        }
+      )
+    ).json();
   }
-  getScreenshots() {
-    return this.http.get('http://localhost:3005/server/screenshots');
+  async getScreenshots() {
+    return await (
+      await fetch(
+        `http://localhost:3005/server/screenshots?session=${this.session}`
+      )
+    ).json();
   }
-  postScreenshot() {
-    return this.http.post('http://localhost:3005/server/screenshot', {
-      screenshot: 'data',
-    });
+  async deleteScreenshot(id: string) {
+    return await (
+      await fetch(`http://localhost:3005/server/screenshot?id=${id}`, {
+        method: 'DELETE',
+      })
+    ).json();
   }
 
-  generateInstance() {
-    const newInstance = uuidv4();
-    window.location.pathname = newInstance;
+  generateSession() {
+    const newSession = uuidv4();
+    window.location.pathname = newSession;
   }
 }

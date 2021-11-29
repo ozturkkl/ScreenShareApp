@@ -36,14 +36,18 @@ export class CanvasComponent {
     this.drawCanvas(this.canvasElm.nativeElement, this.imageBitmap);
     if (!this.imageBitmap) this.ngAfterViewInit();
   }
-
   discardCapture() {
     this.imageBitmap = null;
   }
+
   async saveCapture() {
-    if (!this.imageBitmap) return;
-    await this.storageService.saveScreenshot(this.imageBitmap);
-    this.galleryRequest.emit();
+    const blob = await this.getBlob(this.canvasElm.nativeElement);
+    if (blob) {
+      await this.storageService.saveScreenshot(blob);
+      this.galleryRequest.emit();
+    } else {
+      console.error('Failed to get image blob...');
+    }
   }
 
   updatePlayer(video: HTMLVideoElement) {
@@ -55,5 +59,11 @@ export class CanvasComponent {
     canvas.width = img.width;
     canvas.height = img.height;
     canvas.getContext('2d')?.drawImage(img, 0, 0, img.width, img.height);
+  }
+
+  getBlob(canvas: HTMLCanvasElement) {
+    return new Promise<Blob | null>((res) => {
+      canvas.toBlob((blob) => res(blob));
+    });
   }
 }
