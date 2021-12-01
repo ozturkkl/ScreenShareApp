@@ -19,8 +19,9 @@ export class ImageItemComponent implements OnInit {
 
   constructor(private storageService: StorageService) {}
 
-  deleteScreenshot(id: string) {
-    this.storageService.deleteScreenshot(id);
+  async deleteScreenshot(id: string) {
+    await this.storageService.deleteScreenshot(id);
+    this.screenshotDeleted.emit();
   }
 
   ngOnInit(): void {}

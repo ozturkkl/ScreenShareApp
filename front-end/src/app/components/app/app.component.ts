@@ -34,4 +34,8 @@ export class AppComponent {
     this.showCanvas = false;
     this.showWelcome = true;
   }
+  onDelete() {
+    this.showGallery = false;
+    this.onGallery();
+  }
 }

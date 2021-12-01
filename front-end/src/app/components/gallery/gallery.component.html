@@ -1,3 +1,6 @@
 <span *ngFor="let screenshot of screenshots" class="screenshots-container">
-  <app-image-item [screenshot]="screenshot"></app-image-item>
+  <app-image-item
+    [screenshot]="screenshot"
+    (screenshotDeleted)="onDelete()"
+  ></app-image-item>
 </span>
