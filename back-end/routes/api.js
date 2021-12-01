@@ -37,7 +37,6 @@ router.delete("/screenshot", async (req, res) => {
     });
   }
 });
-
 router.post("/screenshot", upload.single("screen"), async (req, res) => {
   try {
     res.json({

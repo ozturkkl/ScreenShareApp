@@ -1,4 +1,4 @@
-export interface screenshot {
+export interface Screenshot {
   fileName: string;
   id: string;
   session: string;

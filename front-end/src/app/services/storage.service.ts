@@ -8,12 +8,10 @@ import { v4 as uuidv4 } from 'uuid';
 export class StorageService {
   session: string;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     const path = window.location.pathname;
     if (path === '/') this.generateSession();
     this.session = path.substr(1);
-
-    this.getScreenshots().then((data) => console.log(data));
   }
 
   async saveScreenshot(imageBlob: Blob) {

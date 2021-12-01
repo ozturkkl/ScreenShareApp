@@ -14,8 +14,6 @@ export class ScreenCaptureService {
   streamBuffer: MediaStream | null = null;
   screenShot: any = null;
 
-  constructor() {}
-
   async changeScreen() {
     this.destroyCapture();
     this.streamBuffer = await this.startCapture(gdmOptions);

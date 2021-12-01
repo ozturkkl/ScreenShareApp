@@ -20,7 +20,6 @@ const app = initializeApp(firebaseConfig);
 const collectionName = "screenshots";
 
 const db = getFirestore();
-
 const storage = getStorage(app);
 const screenshotsRef = ref(storage, collectionName + "/");
 

@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/services/storage.service';
 export class CanvasComponent {
   streamBuffer: MediaStream | null = null;
   imageBitmap: ImageBitmap | null = null;
+
   constructor(
     private screenCaptureService: ScreenCaptureService,
     private storageService: StorageService
